@@ -26,16 +26,20 @@ body{
     width: 99%;
     z-index: 5;
     min-height: 3vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   header h2{
-    float: right;
     font-size: 18px;
     font-family: 'Sacramento';
     text-align: right;
-    margin-top: -2px;
+    margin: 0;
     margin-right: 12px;
+    padding: 1vh;
     color: white;
+    white-space: nowrap;
   }
   
   .motto {
@@ -44,8 +48,7 @@ body{
 
   nav {
     padding: 1vh;
-    width: 60%;
-    float: left;
+    flex-grow: 1;
   }
   
   nav li {
