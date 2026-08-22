@@ -1246,3 +1246,141 @@ p:last-child {
         font-size: 0.8em;
     }
 }
+
+/* ==========================================================================
+   11. ZGODA NA CIASTECZKA
+   Baner i zaślepka mapy. Baner buduje JavaScript (js/script.js) — bez JS
+   nic zewnętrznego i tak się nie ładuje, więc nie ma o co pytać.
+   ========================================================================== */
+
+.cookie-bar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 90;
+    background: var(--navy-900);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 -8px 32px rgba(11, 32, 56, 0.28);
+    color: rgba(255, 255, 255, 0.82);
+    padding: clamp(1.1rem, 0.9rem + 1vw, 1.6rem) 0;
+    font-size: var(--fs-small);
+    line-height: 1.6;
+}
+
+.cookie-bar[hidden] {
+    display: none;
+}
+
+.cookie-bar__inner {
+    width: min(100% - 2.5rem, var(--wrap));
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+}
+
+.cookie-bar__text {
+    flex: 1 1 22rem;
+    margin: 0;
+}
+
+.cookie-bar__text a {
+    color: var(--sky-300);
+}
+
+.cookie-bar__text a:hover {
+    color: var(--white);
+}
+
+.cookie-bar__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    flex-shrink: 0;
+}
+
+/* Odrzucenie musi być równie łatwe jak zgoda — stąd oba przyciski
+   tej samej wielkości. Baner, w którym „Akceptuję" jest wyeksponowane,
+   a odmowa schowana, nie spełnia wymogu dobrowolnej zgody. */
+.cookie-bar .btn {
+    /* 0.95rem daje ok. 46 px wysokości — powyżej progu 44 px, poniżej którego
+       trudno trafić palcem. */
+    padding: 0.95rem 1.5rem;
+    font-size: var(--fs-micro);
+    min-width: 9.5rem;
+    justify-content: center;
+}
+
+/* Zaślepka w miejscu mapy */
+.map-consent {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    background: var(--sand-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.map-consent__inner {
+    max-width: 22rem;
+}
+
+.map-consent svg {
+    width: 34px;
+    height: 34px;
+    color: var(--blue-600);
+    margin: 0 auto 0.9rem;
+}
+
+.map-consent p {
+    font-size: var(--fs-small);
+    color: var(--ink-500);
+    margin-bottom: 1.2rem;
+}
+
+.map-consent__alt {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: var(--fs-micro);
+}
+
+/* Po zgodzie zaślepkę przykrywa wczytana mapa. Zaślepka zostaje
+   w drzewie, więc po wycofaniu zgody wraca bez przeładowania strony. */
+.map-consent.is-loaded .map-consent__inner {
+    display: none;
+}
+
+.map-consent.is-loaded {
+    padding: 0;
+    background: none;
+}
+.map-consent iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: var(--radius-lg);
+}
+
+/* Przycisk „Ustawienia ciasteczek" dokładany do stopki przez JS */
+.cookie-reset {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.cookie-reset:hover {
+    color: var(--white);
+}

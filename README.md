@@ -14,6 +14,7 @@ flota/index.html    opis pojazdów + galeria zdjęć
 o-nas/index.html    o firmie
 kontakt/index.html  dane kontaktowe + mapa
 wsparcie/index.html tablica PFR (link tylko w stopce)
+prywatnosc/index.html polityka prywatności
 404.html            strona błędu
 
 css/style.css       cały wygląd strony
@@ -116,6 +117,29 @@ Skrypt wypisze na koniec gotowy kawałek HTML do wklejenia. Kafelek wygląda tak
 korzystające z czytników ekranu.
 
 ---
+
+## Ciasteczka i prywatność
+
+Strona **nie ustawia własnych ciasteczek** i nie ma narzędzi analitycznych.
+Jedyny element strony trzeciej to mapa Google na `/kontakt/`.
+
+Mapa nie ładuje się sama — jej adres siedzi w atrybucie `data-src`, a `js/script.js`
+wstawia ramkę dopiero po zgodzie. Dzięki temu przed zgodą do Google nie leci żadne
+zapytanie. Bez JavaScriptu mapa też się nie wczyta, czyli w razie awarii skryptu
+zachowanie jest bezpieczne, a nie odwrotnie.
+
+Baner buduje JavaScript, nie ma go w HTML — inaczej trzeba by go kopiować do ośmiu
+plików. Decyzja ląduje w `localStorage` pod kluczem `globbus-zgoda-mapy`
+(`tak` / `nie`). Przycisk **Ustawienia ciasteczek** w stopce pozwala ją zmienić.
+
+Oba przyciski w banerze mają celowo **identyczny rozmiar** — odmowa musi być równie
+łatwa jak zgoda. Jeśli będziesz zmieniać ten fragment, nie eksponuj „Akceptuję"
+kosztem „Odrzucam".
+
+Polityka prywatności to `prywatnosc/index.html`. **Nie jest zatwierdzona prawnie** —
+opisuje wiernie, co strona robi technicznie, ale przed traktowaniem jej jako
+dokumentu firmy daj ją komuś od RODO. W pliku jest komentarz `UZUPEŁNIJ`
+przy okresie przechowywania korespondencji.
 
 ## Do uzupełnienia
 

@@ -173,10 +173,27 @@
 
                     <div>
                         <h2 class="visually-hidden">Mapa dojazdu</h2>
-                        <iframe class="map"
-                            src="https://maps.google.com/maps?q=Szosa%20Che%C5%82mi%C5%84ska%20168%2C%2087-100%20Toru%C5%84&amp;hl=pl&amp;z=15&amp;output=embed"
-                            title="Mapa — Szosa Chełmińska 168, Toruń" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                        <!-- Mapa Google ustawia własne ciasteczka, więc nie ładuje się
+                             sama. Adres jest w data-src, nie w src — dzięki temu żadne
+                             zapytanie do Google nie leci, dopóki użytkownik nie wyrazi
+                             zgody. Bez JavaScriptu też nie poleci. -->
+                        <div class="map-consent" id="mapa"
+                            data-src="https://maps.google.com/maps?q=Szosa%20Che%C5%82mi%C5%84ska%20168%2C%2087-100%20Toru%C5%84&amp;hl=pl&amp;z=15&amp;output=embed">
+                            <div class="map-consent__inner">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                    <circle cx="12" cy="10" r="3" />
+                                </svg>
+                                <p>Mapa Google zapisuje ciasteczka na Twoim urządzeniu, dlatego pokazujemy ją
+                                    dopiero za Twoją zgodą.</p>
+                                <button class="btn btn--outline" type="button" data-zgoda-mapa>Pokaż mapę</button>
+                                <p class="map-consent__alt">albo <a
+                                        href="https://www.google.com/maps/search/?api=1&amp;query=Szosa+Che%C5%82mi%C5%84ska+168%2C+87-100+Toru%C5%84"
+                                        target="_blank" rel="noopener">otwórz w Mapach Google</a></p>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -219,7 +236,7 @@
                         <li>ul. Szosa Chełmińska 168/11<br>87-100 Toruń</li>
                         <li>NIP 879-270-18-10</li>
                         <li>REGON 380225440</li>
-                        <li><a href="/wsparcie/">Fundusz Wsparcia Inwestycyjnego</a></li>
+                        <li><a href="/wsparcie/">Fundusz Wsparcia Inwestycyjnego</a></li>                        <li><a href="/prywatnosc/">Polityka prywatności</a></li>
                     </ul>
                 </div>
             </div>
