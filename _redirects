@@ -1,0 +1,6 @@
+# Przekierowania Cloudflare Pages — stare adresy prowadzą na nowe,
+# żeby linki krążące w sieci i wyniki Google dalej działały.
+/about      /o-nas/    301
+/about/     /o-nas/    301
+/galeria    /flota/    301
+/galeria/   /flota/    301
