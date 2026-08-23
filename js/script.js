@@ -50,6 +50,36 @@
     }
 
     /* ---------------------------------------------------------------
+       Przeniesienie logo z sekcji hero do nagłówka (tylko strona główna)
+       ---------------------------------------------------------------
+       Tło nagłówka zmienia się już po 60 px, ale duże logo znika dopiero
+       kilkaset pikseli dalej — gdyby oprzeć oba na tym samym progu, przez
+       chwilę widać by było dwa logo naraz. Dlatego pilnujemy rzeczywistego
+       położenia dużego logo, a nie liczby pikseli. */
+    var heroLogo = document.querySelector('.hero__logo');
+
+    if (header && heroLogo) {
+        var pokazLogo = function (pokaz) {
+            header.classList.toggle('show-logo', pokaz);
+        };
+
+        if ('IntersectionObserver' in window) {
+            // Górny margines ujemny o wysokość paska: obserwowany obszar
+            // zaczyna się pod nagłówkiem, więc logo „przestaje istnieć"
+            // dokładnie w chwili, gdy chowa się za paskiem.
+            var wysokoscPaska = header.offsetHeight;
+
+            new IntersectionObserver(function (wpisy) {
+                pokazLogo(!wpisy[0].isIntersecting);
+            }, { rootMargin: '-' + wysokoscPaska + 'px 0px 0px 0px' }).observe(heroLogo);
+        } else {
+            // Starsza przeglądarka — pokazujemy logo od razu.
+            // Lepiej dwa logo naraz niż żadnego.
+            pokazLogo(true);
+        }
+    }
+
+    /* ---------------------------------------------------------------
        Podgląd zdjęć w galerii
        --------------------------------------------------------------- */
     var lightbox = document.querySelector('.lightbox');

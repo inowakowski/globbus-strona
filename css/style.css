@@ -390,6 +390,37 @@ p:last-child {
     flex-shrink: 0;
     display: block;
     line-height: 0;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+/* Strona główna ma duże logo w sekcji hero. Dopóki jest ono widoczne, małe
+   logo w nagłówku jest schowane — dwa te same znaki naraz gryzą się ze sobą.
+   Małe pojawia się dokładnie wtedy, gdy duże schowa się za paskiem, co daje
+   wrażenie przeniesienia go do nagłówka.
+
+   Klasę .has-hero-logo ma wyłącznie index.html, więc podstron to nie dotyczy.
+   Klasę .show-logo dokłada obserwator w js/script.js — pilnuje faktycznego
+   położenia dużego logo, zamiast zgadywać próg w pikselach, który i tak
+   byłby inny na każdym rozmiarze ekranu.
+
+   visibility, a nie samo opacity: niewidoczny odnośnik zostałby w kolejności
+   tabulacji i klawiatura wpadałaby w pustkę. */
+.site-header.has-hero-logo .site-logo {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.site-header.has-hero-logo.show-logo .site-logo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Bez JavaScriptu nikt nie doda .show-logo, więc logo zostałoby ukryte na
+   zawsze. Wtedy lepiej pokazać je od razu — dwa logo naraz to drobiazg,
+   brak logo w nagłówku to błąd. */
+.no-js .site-header.has-hero-logo .site-logo {
+    opacity: 1;
+    visibility: visible;
 }
 
 .site-logo img {
