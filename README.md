@@ -67,6 +67,34 @@ npx serve .
 
 ---
 
+## Cache — przeczytaj, zanim zmienisz CSS albo JS
+
+Plik `_headers` mówi przeglądarkom, jak długo trzymać pliki. Ustawienia są
+dobrane tak, żeby nie dało się przypadkiem wypuścić zepsutej strony:
+
+| Co | Jak długo | Dlaczego |
+|---|---|---|
+| `/img/*` | rok | zdjęcia się nie zmieniają |
+| `/css/*`, `/js/*` | sprawdzane za każdym wejściem | żeby poprawka dotarła od razu |
+
+**Skąd to ostrożne podejście.** Początkowo CSS i JS miały tydzień cache.
+Skończyło się tak, że po zmianie w arkuszu stylów odwiedzający dostawali nowy
+HTML ze **starym** CSS-em — strona wyglądała na zepsutą, choć pliki na serwerze
+były poprawne. Diagnoza zajęła sporo czasu, bo wszystko po stronie serwera
+wyglądało dobrze.
+
+`must-revalidate` nie znaczy „pobieraj za każdym razem". Przeglądarka pyta
+tylko, czy plik się zmienił, i zwykle dostaje puste 304 — koszt to kilkadziesiąt
+bajtów, nieodczuwalne.
+
+Odnośniki do CSS i JS mają na końcu `?v=2`. To ślad po ratowaniu sytuacji z tamtej
+awarii — zmiana adresu ominęła kopie, które przeglądarki już trzymały. Przy
+obecnych nagłówkach nie trzeba tej liczby podbijać.
+
+**Uwaga przy zdjęciach:** obrazki mają rok cache. Jeśli podmienisz zdjęcie,
+zapisując je pod tą samą nazwą, odwiedzający będą jeszcze długo widzieć stare.
+Nowe zdjęcie zapisuj pod **nową nazwą**.
+
 ## Jak edytować treść
 
 Wszystkie teksty siedzą wprost w plikach `.html` — otwórz w dowolnym edytorze

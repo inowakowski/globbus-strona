@@ -6,13 +6,21 @@
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
-# Zdjęcia i logo nie zmieniają się — przeglądarka może je trzymać rok.
+# Zdjęcia i logo: rok. Przy podmianie zdjęcia zapisz je pod NOWĄ nazwą,
+# inaczej odwiedzający zobaczą stare przez kolejny rok.
 /img/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Styl i skrypty: tydzień. Po zmianie pliku dodaj ?v=2 w odnośniku.
+# Styl i skrypty muszą być sprawdzane przy każdym wejściu.
+#
+# Wcześniej stało tu max-age=604800 (tydzień) i skończyło się tak, że po
+# poprawce w CSS odwiedzający dostawali nowy HTML ze starym arkuszem stylów.
+# Strona wyglądała na zepsutą, a pliki na serwerze były poprawne.
+#
+# must-revalidate nie znaczy "pobieraj za każdym razem": przeglądarka pyta
+# o ETag i zwykle dostaje puste 304, więc koszt to kilkadziesiąt bajtów.
 /css/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 /js/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=0, must-revalidate
