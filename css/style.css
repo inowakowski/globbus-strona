@@ -120,6 +120,11 @@ h4 {
     line-height: 1.15;
     margin: 0 0 0.5em;
     letter-spacing: -0.01em;
+    /* Rozkłada wiersze nagłówka równomiernie, zamiast zostawiać w ostatnim
+       jedno słowo. Starsze przeglądarki po prostu to zignorują.
+       Uwaga: to nie zastępuje twardych spacji po „w", „i", „z" w treści —
+       tamto jest wymogiem polskiej typografii, a nie kwestią estetyki. */
+    text-wrap: balance;
 }
 
 h1 {

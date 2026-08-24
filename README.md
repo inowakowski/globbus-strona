@@ -97,7 +97,7 @@ Dopóki obowiązuje te 4 godziny, po każdej zmianie w `css/style.css` lub
 `js/script.js` **podbij numer w odnośnikach we wszystkich 8 plikach HTML**:
 
 ```bash
-grep -rl "v=2" --include=*.html . | xargs sed -i "s/v=2/v=3/g"
+grep -rl "v=3" --include=*.html . | xargs sed -i "s/v=3/v=4/g"
 ```
 
 Zmiana adresu omija wszystkie zapisane kopie i poprawka trafia do odwiedzających

@@ -39,7 +39,6 @@
     /* ---------------------------------------------------------------
        Nagłówek: przezroczysty nad zdjęciem, pełny po przewinięciu
        --------------------------------------------------------------- */
-    var header = document.querySelector('.site-header');
 
     if (header && header.classList.contains('is-transparent')) {
         var onScroll = function () {
@@ -210,9 +209,9 @@
         bar.innerHTML =
             '<div class="cookie-bar__inner">' +
             '<p class="cookie-bar__text">Ta strona nie ustawia własnych ciasteczek. ' +
-            'Korzystamy jednak z mapy Google na stronie kontaktu, która zapisuje ciasteczka ' +
+            'Korzystamy jednak z&nbsp;mapy Google na stronie kontaktu, która zapisuje ciasteczka ' +
             'na Twoim urządzeniu. Mapa wczyta się dopiero, gdy wyrazisz zgodę. ' +
-            'Szczegóły w <a href="/prywatnosc/">polityce prywatności</a>.</p>' +
+            'Szczegóły w&nbsp;<a href="/prywatnosc/">polityce prywatności</a>.</p>' +
             '<div class="cookie-bar__buttons">' +
             '<button class="btn btn--ghost" type="button" data-zgoda="nie">Odrzucam</button>' +
             '<button class="btn btn--primary" type="button" data-zgoda="tak">Akceptuję</button>' +
