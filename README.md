@@ -75,7 +75,7 @@ dobrane tak, żeby nie dało się przypadkiem wypuścić zepsutej strony:
 | Co | Jak długo | Dlaczego |
 |---|---|---|
 | `/img/*` | rok | zdjęcia się nie zmieniają |
-| `/css/*`, `/js/*` | sprawdzane za każdym wejściem | żeby poprawka dotarła od razu |
+| `/css/*`, `/js/*` | 4 godziny | kompromis wymuszony przez Cloudflare (patrz niżej) |
 
 **Skąd to ostrożne podejście.** Początkowo CSS i JS miały tydzień cache.
 Skończyło się tak, że po zmianie w arkuszu stylów odwiedzający dostawali nowy
@@ -83,13 +83,26 @@ HTML ze **starym** CSS-em — strona wyglądała na zepsutą, choć pliki na ser
 były poprawne. Diagnoza zajęła sporo czasu, bo wszystko po stronie serwera
 wyglądało dobrze.
 
-`must-revalidate` nie znaczy „pobieraj za każdym razem". Przeglądarka pyta
-tylko, czy plik się zmienił, i zwykle dostaje puste 304 — koszt to kilkadziesiąt
-bajtów, nieodczuwalne.
+**Uwaga: Cloudflare nadpisuje ustawienie z `_headers`.** W pliku stoi
+`max-age=0, must-revalidate`, ale serwer oddaje `max-age=14400`, czyli 4 godziny.
+Robi to ustawienie **Browser Cache TTL** na poziomie strefy, silniejsze od pliku.
 
-Odnośniki do CSS i JS mają na końcu `?v=2`. To ślad po ratowaniu sytuacji z tamtej
-awarii — zmiana adresu ominęła kopie, które przeglądarki już trzymały. Przy
-obecnych nagłówkach nie trzeba tej liczby podbijać.
+Da się to wyłączyć: w panelu Cloudflare **Caching → Configuration → Browser Cache
+TTL** ustaw **Respect Existing Headers**. Wtedy `_headers` zacznie obowiązywać
+i poniższy krok z numerkiem przestanie być potrzebny.
+
+### Zmieniasz CSS albo JS? Podbij numer
+
+Dopóki obowiązuje te 4 godziny, po każdej zmianie w `css/style.css` lub
+`js/script.js` **podbij numer w odnośnikach we wszystkich 8 plikach HTML**:
+
+```bash
+grep -rl "v=2" --include=*.html . | xargs sed -i "s/v=2/v=3/g"
+```
+
+Zmiana adresu omija wszystkie zapisane kopie i poprawka trafia do odwiedzających
+natychmiast. Bez tego część osób przez cztery godziny zobaczy nowy HTML ze starym
+arkuszem stylów — dokładnie to zepsuło kiedyś logo na stronie głównej.
 
 **Uwaga przy zdjęciach:** obrazki mają rok cache. Jeśli podmienisz zdjęcie,
 zapisując je pod tą samą nazwą, odwiedzający będą jeszcze długo widzieć stare.
